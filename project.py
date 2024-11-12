@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import NBADataAnalysis as nba
 import NBADataloder as nbd
-
+import time  # Import time module for tracking execution time
 
 def main():
     # Usage
@@ -19,7 +19,7 @@ def main():
 
     # Create analysis and visualization instance
     nba_analysis = nba.NBADataAnalysis(nba_df)
-    
+    total_time = 0
     while True:
         print("\nChoose an option:")
         print("1. Display Column Descriptions")
@@ -41,7 +41,11 @@ def main():
         if choice == "0":
             print("Exiting the program. Have a nice day!")
             break
-        elif choice == "1":
+
+        # Start timing for the selected operation
+        start_time = time.time()
+        
+        if choice == "1":
             nba_analysis.display_column_descriptions()
         elif choice == "2":
             nba_analysis.display_data_summary()
@@ -81,5 +85,15 @@ def main():
         else:
             print("Invalid choice. Please enter a number between 0 and 12.")
 
+        # End timing for the selected operation
+        
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"Time taken for option {choice}: {elapsed_time:.2f} seconds.")
+        total_time+=elapsed_time
+
+    return total_time
 if __name__ == "__main__":
-    main()
+    total_time=main()
+    print("\nTotal time:", round(total_time, 2), "seconds")
+
